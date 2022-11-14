@@ -38,7 +38,7 @@ public class TelevisionsController {
         if (id < televisions.size()) {
             return new ResponseEntity<>(televisions.get(id), HttpStatus.OK);
         } else {
-          throw new IndexOutOfBounceException("id not found");
+            throw new IndexOutOfBounceException("id not found");
         }
     }
 
