@@ -2,73 +2,58 @@ package nl.novi.TechItEasyController.Controllers;
 
 import nl.novi.TechItEasyController.Exceptions.IndexOutOfBounceException;
 import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
-import nl.novi.TechItEasyController.Module.Television;
+import nl.novi.TechItEasyController.Models.Television;
+import nl.novi.TechItEasyController.Repositorys.TelevisionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 
 
 @RestController
+@RequestMapping("televisions")
 public class TelevisionsController {
-    //variable
 
-    private ArrayList<Television> televisions;
+    @Autowired
+    private TelevisionRepository repos;
 
-    public TelevisionsController() {
-        televisions = new ArrayList<>();
 
-        Television television = new Television();
-        television.setName("SamsungTV1");
-        television.setBrand("Samsung");
-        television.setPrice(500);
-        televisions.add(television);
+    @GetMapping("")
+    public ResponseEntity<Iterable<Television>> getTelevisions() {
+        return ResponseEntity.ok(repos.findAll());
     }
 
-    @GetMapping("/televisions")
-    public ResponseEntity<Object> getTelevisions() {
-        return new ResponseEntity<>(televisions, HttpStatus.OK);
+    @GetMapping("/brand")
+    public ResponseEntity<Iterable<Television>> getTelevisionsByBrand(@RequestParam String brand) {
+        return ResponseEntity.ok(repos.findByBrandContaining(brand));
     }
 
-    @GetMapping("/televisions/{id}")
-    public ResponseEntity<Object> getTelevisions(@PathVariable int id) {
-        if (id < televisions.size()) {
-            return new ResponseEntity<>(televisions.get(id), HttpStatus.OK);
-        } else {
-            throw new IndexOutOfBounceException("id not found");
-        }
+    @PostMapping("")
+    public ResponseEntity<String> createTelevision(@RequestBody Television television) {
+        Television savedTelevision = repos.save(television);
+
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/televisions/" + savedTelevision.getId()).toUriString());
+
+        return ResponseEntity.created(uri).body("Television created !");
     }
 
+    //@PutMapping("/{id}")
+    //public ResponseEntity<String> updateTelevision(@PathVariable Long id, @RequestBody Television television) {
+      //  repos.findById(id)
+        //URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/televisions/{id}").toUriString());
+        //return ResponseEntity.created(uri).body("television updated");
+    //}
 
-    @PostMapping("/televisions")
-    public ResponseEntity<Object> createTelevision (@RequestBody Television television) {
-        televisions.add(television);
-        return new ResponseEntity<>(television, HttpStatus.CREATED);
-    }
-
-
-    @PutMapping("/televisions/{id}")
-    public ResponseEntity<Television> updatePerson (@PathVariable int id, @RequestBody Television television) {
-        if (id >= 0 && id < televisions.size()) {
-            televisions.set(id, television);
-            return new ResponseEntity<>(television, HttpStatus.OK);
-        } else {
-            throw new RecordNotFoundException("invalid id");
-        }
-    }
-
-    @DeleteMapping("/televisions")
-    public ResponseEntity<String> deleteTelevision (@RequestBody String name) {
-        for (int i = 0; i < televisions.size(); i++) {
-            if (televisions.get(i).getName().equals(name)) {
-                televisions.remove(i);
-                return new ResponseEntity<>("Item Removed", HttpStatus.ACCEPTED);
-            }
-        }
-        throw new RecordNotFoundException("no television found");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTelevision(@PathVariable Long id) {
+        repos.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
