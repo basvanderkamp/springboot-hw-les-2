@@ -7,4 +7,6 @@ public interface TelevisionRepository extends JpaRepository<Television, Long> {
 
     public Iterable<Television> findByBrandContaining(String brand);
 
+
+
 }

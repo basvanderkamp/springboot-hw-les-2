@@ -1,60 +1,48 @@
-package nl.novi.TechItEasyController.Models;
+package nl.novi.TechItEasyController.Dto;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
-@Entity
-@Table(name = "televisions")
-public class Television {
+public class TelevisionDto {
 
     @Id
     @GeneratedValue
-    private long id;
-    private String type;
-    private String brand;
-    private String name;
-    private double price;
-    private double availableSize;
-    private double refreshRate;
-    private String screenType;
-    private String screenQuality;
-    private boolean smartTv;
-    private boolean wifi;
-    private boolean voiceControl;
-    private boolean hdr;
-    private boolean bluetooth;
-    private boolean ambiLight;
-    private int originalStock;
-    private int sold;
+    public long id;
+    @NotBlank
+    public String type;
+    @NotBlank
+    public String brand;
+    @NotBlank
+    public String name;
+    @Positive
+    public double price;
 
+    public double availableSize;
 
-    //constructors
-        public Television(String type, String brand, String name, double price, double availableSize, double refreshRate, String screenType, String screenQuality, boolean smartTv, boolean wifi, boolean voiceControl, boolean hdr, boolean bluetooth, boolean ambiLight, int originalStock, int sold) {this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
+    public double refreshRate;
 
-    public Television() {
+    public  String screenType;
 
-    }
+    public String screenQuality;
 
-    //getters
+    public boolean smartTv;
+
+    public boolean wifi;
+
+    public boolean voiceControl;
+
+    public boolean hdr;
+
+    public boolean bluetooth;
+
+    public boolean ambiLight;
+
+    public int originalStock;
+
+    public int sold;
+
     public long getId() {
         return id;
     }
@@ -124,9 +112,9 @@ public class Television {
     }
 
 
-    //setters
-
-    public void setId(Long id) {this.id = id;}
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setType(String type) {
         this.type = type;
     }
