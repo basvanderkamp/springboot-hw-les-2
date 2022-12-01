@@ -65,14 +65,13 @@ public class TelevisionsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> overrideTelevision(@PathVariable Long id, @RequestBody TelevisionDto televisionDto) {
-
-        Long overridedId = service.overrideTelevision(televisionDto, id);
-
-
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/televisions/" + overridedId).toUriString());
-        return ResponseEntity.created(uri).body("television updated");
+    public ResponseEntity<TelevisionDto> overWriteTelevision(@PathVariable long id,@RequestBody TelevisionDto televisionDto ) {
+        return ResponseEntity.ok(service.overrideTelevision(id, televisionDto));
     }
+
+
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTelevisionById(@PathVariable Long id) {

@@ -97,16 +97,15 @@ public class TelevisionService {
         }
     }
 
-    public Long overrideTelevision(TelevisionDto televisionDto, long id) {
-        Optional<Television> overrideTelevision = repos.findById(id);
+    public TelevisionDto overrideTelevision(Long id, TelevisionDto televisionDto) {
+        Optional<Television> toOverrideTelevision = repos.findById(id);
 
-        if (overrideTelevision.isEmpty()) {
+        if (toOverrideTelevision.isEmpty()) {
             throw new RecordNotFoundException("No television found with id: " + id);
         } else {
-            repos.deleteById(id);
 
-            Television updateTelevision = new Television();
-            updateTelevision.setId(overrideTelevision.get().getId());
+            Television updateTelevision = toOverrideTelevision.get();
+
             updateTelevision.setType(televisionDto.type);
             updateTelevision.setBrand(televisionDto.brand);
             updateTelevision.setName(televisionDto.name);
@@ -124,9 +123,10 @@ public class TelevisionService {
             updateTelevision.setOriginalStock(televisionDto.originalStock);
             updateTelevision.setSold(televisionDto.sold);
 
-            Television savedTelevision = repos.save(updateTelevision);
+            repos.save(updateTelevision);
+            return transferToDto(updateTelevision);
 
-            return savedTelevision.getId();
+
         }
 
 

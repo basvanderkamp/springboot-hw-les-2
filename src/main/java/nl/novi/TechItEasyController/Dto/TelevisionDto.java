@@ -7,9 +7,7 @@ import javax.validation.constraints.Positive;
 
 public class TelevisionDto {
 
-    @Id
-    @GeneratedValue
-    public long id;
+
     @NotBlank
     public String type;
     @NotBlank
@@ -43,9 +41,7 @@ public class TelevisionDto {
 
     public int sold;
 
-    public long getId() {
-        return id;
-    }
+
 
     public String getType() {
         return type;
@@ -112,9 +108,6 @@ public class TelevisionDto {
     }
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     public void setType(String type) {
         this.type = type;
     }

@@ -1,16 +1,13 @@
 package nl.novi.TechItEasyController.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "televisions")
 public class Television {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String type;
     private String brand;
@@ -51,7 +48,6 @@ public class Television {
     }
 
     public Television() {
-
     }
 
     //getters
@@ -126,7 +122,7 @@ public class Television {
 
     //setters
 
-    public void setId(Long id) {this.id = id;}
+
     public void setType(String type) {
         this.type = type;
     }
