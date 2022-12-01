@@ -1,19 +1,21 @@
-package nl.novi.TechItEasyController.Models;
+package nl.novi.TechItEasyController.Dto;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
+public class WallBracketDto {
 
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "WallBrackets")
-public class WallBracket {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NotBlank
     private String size;
+    @NotBlank
     private String type;
+
     private boolean adjustable;
+    @NotBlank
     private String name;
+    @Positive
     private double price;
 
 
@@ -21,10 +23,6 @@ public class WallBracket {
 
 
     //Getters
-        public Long getId() {
-        return id;
-    }
-
     public String getSize() {
         return size;
     }

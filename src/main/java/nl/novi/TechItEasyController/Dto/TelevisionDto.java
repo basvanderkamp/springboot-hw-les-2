@@ -1,48 +1,48 @@
 package nl.novi.TechItEasyController.Dto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 public class TelevisionDto {
 
 
+
     @NotBlank
-    public String type;
-    @NotBlank
-    public String brand;
-    @NotBlank
-    public String name;
-    @Positive
-    public double price;
+    private String type;
 
-    public double availableSize;
+    private String brand;
 
-    public double refreshRate;
+    private String name;
 
-    public  String screenType;
+    private double price;
 
-    public String screenQuality;
+    private double availableSize;
 
-    public boolean smartTv;
+    private double refreshRate;
 
-    public boolean wifi;
+    private  String screenType;
 
-    public boolean voiceControl;
+    private String screenQuality;
 
-    public boolean hdr;
+    private boolean smartTv;
 
-    public boolean bluetooth;
+    private boolean wifi;
 
-    public boolean ambiLight;
+    private boolean voiceControl;
 
-    public int originalStock;
+    private boolean hdr;
 
-    public int sold;
+    private boolean bluetooth;
+
+    private boolean ambiLight;
+
+    private int originalStock;
+
+    private int sold;
 
 
 
+    //Getter
     public String getType() {
         return type;
     }
@@ -108,6 +108,8 @@ public class TelevisionDto {
     }
 
 
+
+    //Setters
     public void setType(String type) {
         this.type = type;
     }

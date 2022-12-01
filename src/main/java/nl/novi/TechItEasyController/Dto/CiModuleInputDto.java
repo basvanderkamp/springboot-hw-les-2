@@ -1,18 +1,17 @@
-package nl.novi.TechItEasyController.Models;
+package nl.novi.TechItEasyController.Dto;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
+public class CiModuleInputDto {
 
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "CiModules")
-public class CiModule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank
     private String name;
+    @NotBlank
     private String type;
+    @Positive
     private double price;
 
 
@@ -20,11 +19,6 @@ public class CiModule {
 
 
     //Getters
-
-    public Long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }

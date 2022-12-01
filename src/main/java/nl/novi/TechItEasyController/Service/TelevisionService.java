@@ -19,7 +19,8 @@ public class TelevisionService {
         this.repos = repos;
     }
 
-    public TelevisionDto transferToDto(Television television) {
+
+    public TelevisionDto transferToTelevisionDto(Television television) {
         TelevisionDto dto = new TelevisionDto();
 
         dto.setType(television.getType());
@@ -44,22 +45,22 @@ public class TelevisionService {
     public Long createTelevision(TelevisionDto televisionDto) {
         Television newTelevision = new Television();
 
-        newTelevision.setType(televisionDto.type);
-        newTelevision.setBrand(televisionDto.brand);
-        newTelevision.setName(televisionDto.name);
-        newTelevision.setPrice(televisionDto.price);
-        newTelevision.setAvailableSize(televisionDto.availableSize);
-        newTelevision.setRefreshRate(televisionDto.refreshRate);
-        newTelevision.setScreenType(televisionDto.screenType);
-        newTelevision.setScreenQuality(televisionDto.screenQuality);
-        newTelevision.setSmartTv(televisionDto.smartTv);
-        newTelevision.setWifi(televisionDto.wifi);
-        newTelevision.setVoiceControl(televisionDto.voiceControl);
-        newTelevision.setHdr(televisionDto.hdr);
-        newTelevision.setBluetooth(televisionDto.bluetooth);
-        newTelevision.setAmbiLight(televisionDto.ambiLight);
-        newTelevision.setOriginalStock(televisionDto.originalStock);
-        newTelevision.setSold(televisionDto.sold);
+        newTelevision.setType(televisionDto.getType());
+        newTelevision.setBrand(televisionDto.getBrand());
+        newTelevision.setName(televisionDto.getName());
+        newTelevision.setPrice(televisionDto.getPrice());
+        newTelevision.setAvailableSize(televisionDto.getAvailableSize());
+        newTelevision.setRefreshRate(televisionDto.getRefreshRate());
+        newTelevision.setScreenType(televisionDto.getScreenType());
+        newTelevision.setScreenQuality(televisionDto.getScreenQuality());
+        newTelevision.setSmartTv(televisionDto.isSmartTv());
+        newTelevision.setWifi(televisionDto.isWifi());
+        newTelevision.setVoiceControl(televisionDto.isVoiceControl());
+        newTelevision.setHdr(televisionDto.isHdr());
+        newTelevision.setBluetooth(televisionDto.isBluetooth());
+        newTelevision.setAmbiLight(televisionDto.isAmbiLight());
+        newTelevision.setOriginalStock(televisionDto.getOriginalStock());
+        newTelevision.setSold(televisionDto.getSold());
 
         Television savedTelevision = repos.save(newTelevision);
         return savedTelevision.getId();
@@ -70,7 +71,7 @@ public class TelevisionService {
 
         Iterable<Television> allTelevisions = repos.findAll();
         for (Television television : allTelevisions) {
-            televisionDtoList.add(transferToDto(television));
+            televisionDtoList.add(transferToTelevisionDto(television));
         }
         return televisionDtoList;
     }
@@ -82,7 +83,7 @@ public class TelevisionService {
             throw new RecordNotFoundException("No television found with id: " + id);
 
         } else {
-            return transferToDto(television.get());
+            return transferToTelevisionDto(television.get());
         }
     }
 
@@ -106,30 +107,27 @@ public class TelevisionService {
 
             Television updateTelevision = toOverrideTelevision.get();
 
-            updateTelevision.setType(televisionDto.type);
-            updateTelevision.setBrand(televisionDto.brand);
-            updateTelevision.setName(televisionDto.name);
-            updateTelevision.setPrice(televisionDto.price);
-            updateTelevision.setAvailableSize(televisionDto.availableSize);
-            updateTelevision.setRefreshRate(televisionDto.refreshRate);
-            updateTelevision.setScreenType(televisionDto.screenType);
-            updateTelevision.setScreenQuality(televisionDto.screenQuality);
-            updateTelevision.setSmartTv(televisionDto.smartTv);
-            updateTelevision.setWifi(televisionDto.wifi);
-            updateTelevision.setVoiceControl(televisionDto.voiceControl);
-            updateTelevision.setHdr(televisionDto.hdr);
-            updateTelevision.setBluetooth(televisionDto.bluetooth);
-            updateTelevision.setAmbiLight(televisionDto.ambiLight);
-            updateTelevision.setOriginalStock(televisionDto.originalStock);
-            updateTelevision.setSold(televisionDto.sold);
+            updateTelevision.setType(televisionDto.getType());
+            updateTelevision.setBrand(televisionDto.getBrand());
+            updateTelevision.setName(televisionDto.getName());
+            updateTelevision.setPrice(televisionDto.getPrice());
+            updateTelevision.setAvailableSize(televisionDto.getAvailableSize());
+            updateTelevision.setRefreshRate(televisionDto.getRefreshRate());
+            updateTelevision.setScreenType(televisionDto.getScreenType());
+            updateTelevision.setScreenQuality(televisionDto.getScreenQuality());
+            updateTelevision.setSmartTv(televisionDto.isSmartTv());
+            updateTelevision.setWifi(televisionDto.isWifi());
+            updateTelevision.setVoiceControl(televisionDto.isVoiceControl());
+            updateTelevision.setHdr(televisionDto.isHdr());
+            updateTelevision.setBluetooth(televisionDto.isBluetooth());
+            updateTelevision.setAmbiLight(televisionDto.isAmbiLight());
+            updateTelevision.setOriginalStock(televisionDto.getOriginalStock());
+            updateTelevision.setSold(televisionDto.getSold());
 
             repos.save(updateTelevision);
-            return transferToDto(updateTelevision);
-
-
+            return transferToTelevisionDto(updateTelevision);
         }
-
-
     }
+
 
 }

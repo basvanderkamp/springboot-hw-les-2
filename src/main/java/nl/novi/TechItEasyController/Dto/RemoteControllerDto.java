@@ -1,20 +1,18 @@
-package nl.novi.TechItEasyController.Models;
+package nl.novi.TechItEasyController.Dto;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
+public class RemoteControllerDto {
 
 
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "RemoteControllers")
-public class RemoteController {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String compatibleWith;
+    @NotBlank
     private String batteryType;
+    @NotBlank
     private String brand;
+    @Positive
     private double price;
     private int originalStock;
 
@@ -24,11 +22,6 @@ public class RemoteController {
 
 
     //Getters
-
-    public Long getId() {
-        return id;
-    }
-
     public String getCompatibleWith() {
         return compatibleWith;
     }
