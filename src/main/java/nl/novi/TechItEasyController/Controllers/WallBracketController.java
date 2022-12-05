@@ -1,6 +1,7 @@
 package nl.novi.TechItEasyController.Controllers;
 
-import nl.novi.TechItEasyController.Dto.WallBracketDto;
+import nl.novi.TechItEasyController.Dto.Output.WallBracketDto;
+import nl.novi.TechItEasyController.Dto.Input.WallBracketInputDto;
 import nl.novi.TechItEasyController.Service.WallBracketService;
 import nl.novi.TechItEasyController.Util.Utils;
 import org.springframework.http.HttpStatus;
@@ -54,8 +55,8 @@ public class WallBracketController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<WallBracketDto> overWriteWallBracket(@PathVariable long id,@RequestBody WallBracketDto wallBracketDto) {
-        return ResponseEntity.ok(service.overrideWallBracket(id, wallBracketDto));
+    public ResponseEntity<WallBracketDto> overWriteWallBracket(@PathVariable long id, @RequestBody WallBracketInputDto wallBracketInputDto) {
+        return ResponseEntity.ok(service.overrideWallBracket(id, wallBracketInputDto));
     }
 
 

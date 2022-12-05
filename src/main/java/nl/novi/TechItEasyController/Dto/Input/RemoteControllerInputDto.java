@@ -1,4 +1,4 @@
-package nl.novi.TechItEasyController.Dto;
+package nl.novi.TechItEasyController.Dto.Input;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;

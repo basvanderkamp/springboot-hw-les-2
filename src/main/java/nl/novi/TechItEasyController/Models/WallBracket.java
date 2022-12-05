@@ -1,10 +1,13 @@
 package nl.novi.TechItEasyController.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "WallBrackets")
+@Table(name = "wall_brackets")
 public class WallBracket {
 
     @Id
@@ -17,6 +20,17 @@ public class WallBracket {
     private double price;
 
 
+
+    //Relations
+    @ManyToMany(mappedBy = "wallBrackets")
+    @JsonIgnore
+    private List<Television> televisions;
+    public List<Television> getTelevisions() {
+        return televisions;
+    }
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
+    }
 
 
 

@@ -1,10 +1,9 @@
 package nl.novi.TechItEasyController.Service;
 
-import nl.novi.TechItEasyController.Dto.RemoteControllerDto;
-import nl.novi.TechItEasyController.Dto.TelevisionDto;
+import nl.novi.TechItEasyController.Dto.Output.RemoteControllerDto;
+import nl.novi.TechItEasyController.Dto.Input.RemoteControllerInputDto;
 import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
 import nl.novi.TechItEasyController.Models.RemoteController;
-import nl.novi.TechItEasyController.Models.Television;
 import nl.novi.TechItEasyController.Repositorys.RemoteControllerRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,10 @@ import java.util.Optional;
 @Service
 public class RemoteControllerService {
 
-    private final RemoteControllerRepository repos;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public RemoteControllerService(RemoteControllerRepository repos) {
-        this.repos = repos;
+    public RemoteControllerService(RemoteControllerRepository remoteControllerRepository) {
+        this.remoteControllerRepository = remoteControllerRepository;
     }
 
 
@@ -29,6 +28,7 @@ public class RemoteControllerService {
         dto.setCompatibleWith(remoteController.getCompatibleWith());
         dto.setPrice(remoteController.getPrice());
         dto.setOriginalStock(remoteController.getOriginalStock());
+        dto.setTelevision(remoteController.getTelevision());
         return dto;
     }
 
@@ -41,14 +41,14 @@ public class RemoteControllerService {
         newRemoteController.setPrice(remoteControllerDto.getPrice());
         newRemoteController.setOriginalStock(newRemoteController.getOriginalStock());
 
-        RemoteController savedRemoteController = repos.save(newRemoteController);
+        RemoteController savedRemoteController = remoteControllerRepository.save(newRemoteController);
         return savedRemoteController.getId();
     }
 
     public Iterable<RemoteControllerDto> getRemoteControllers() {
         ArrayList<RemoteControllerDto> remoteControllerDtoList = new ArrayList<>();
 
-        Iterable<RemoteController> allRemoteControllers = repos.findAll();
+        Iterable<RemoteController> allRemoteControllers = remoteControllerRepository.findAll();
         for (RemoteController remoteController : allRemoteControllers) {
             remoteControllerDtoList.add(transferToRemoteControllerDto(remoteController));
         }
@@ -56,7 +56,7 @@ public class RemoteControllerService {
     }
 
     public RemoteControllerDto getOneRemoteController(Long id) {
-        Optional<RemoteController> remoteController = repos.findById(id);
+        Optional<RemoteController> remoteController = remoteControllerRepository.findById(id);
 
         if (remoteController.isEmpty()) {
             throw new RecordNotFoundException("No remote found with id: " + id);
@@ -67,18 +67,18 @@ public class RemoteControllerService {
     }
 
     public String deleteRemoteController(Long id) {
-        Optional<RemoteController> deleteRemoteController = repos.findById(id);
+        Optional<RemoteController> deleteRemoteController = remoteControllerRepository.findById(id);
 
         if (deleteRemoteController.isEmpty()) {
             throw new RecordNotFoundException("No remote found with id: " + id);
         } else {
-            repos.deleteById(id);
+            remoteControllerRepository.deleteById(id);
             return "Remote with id: " + id + " is deleted!";
         }
     }
 
-    public RemoteControllerDto overrideRemoteController(Long id, RemoteControllerDto remoteControllerDto) {
-        Optional<RemoteController> toOverrideRemoteController = repos.findById(id);
+    public RemoteControllerDto overrideRemoteController(Long id, RemoteControllerInputDto remoteControllerInputDto) {
+        Optional<RemoteController> toOverrideRemoteController = remoteControllerRepository.findById(id);
 
         if (toOverrideRemoteController.isEmpty()) {
             throw new RecordNotFoundException("No remote found with id: " + id);
@@ -86,13 +86,13 @@ public class RemoteControllerService {
 
             RemoteController updateRemoteController = toOverrideRemoteController.get();
 
-            updateRemoteController.setBatteryType(remoteControllerDto.getBatteryType());
-            updateRemoteController.setBrand(remoteControllerDto.getBrand());
-            updateRemoteController.setCompatibleWith(remoteControllerDto.getCompatibleWith());
-            updateRemoteController.setPrice(remoteControllerDto.getPrice());
-            updateRemoteController.setOriginalStock(remoteControllerDto.getOriginalStock());
+            updateRemoteController.setBatteryType(remoteControllerInputDto.getBatteryType());
+            updateRemoteController.setBrand(remoteControllerInputDto.getBrand());
+            updateRemoteController.setCompatibleWith(remoteControllerInputDto.getCompatibleWith());
+            updateRemoteController.setPrice(remoteControllerInputDto.getPrice());
+            updateRemoteController.setOriginalStock(remoteControllerInputDto.getOriginalStock());
 
-            repos.save(updateRemoteController);
+            remoteControllerRepository.save(updateRemoteController);
             return transferToRemoteControllerDto(updateRemoteController);
         }
     }

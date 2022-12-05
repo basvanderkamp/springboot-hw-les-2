@@ -1,44 +1,44 @@
-package nl.novi.TechItEasyController.Dto;
+package nl.novi.TechItEasyController.Dto.Input;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-public class TelevisionDto {
+public class TelevisionInputDto {
 
 
 
     @NotBlank
-    private String type;
+    public String type;
+    @NotBlank
+    public String brand;
+    @NotBlank
+    public String name;
+    @Positive
+    public double price;
 
-    private String brand;
+    public double availableSize;
 
-    private String name;
+    public double refreshRate;
 
-    private double price;
+    public  String screenType;
 
-    private double availableSize;
+    public String screenQuality;
 
-    private double refreshRate;
+    public boolean smartTv;
 
-    private  String screenType;
+    public boolean wifi;
 
-    private String screenQuality;
+    public boolean voiceControl;
 
-    private boolean smartTv;
+    public boolean hdr;
 
-    private boolean wifi;
+    public boolean bluetooth;
 
-    private boolean voiceControl;
+    public boolean ambiLight;
 
-    private boolean hdr;
+    public int originalStock;
 
-    private boolean bluetooth;
-
-    private boolean ambiLight;
-
-    private int originalStock;
-
-    private int sold;
+    public int sold;
 
 
 

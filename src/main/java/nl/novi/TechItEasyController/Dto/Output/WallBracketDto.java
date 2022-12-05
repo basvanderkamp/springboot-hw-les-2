@@ -1,10 +1,12 @@
-package nl.novi.TechItEasyController.Dto;
+package nl.novi.TechItEasyController.Dto.Output;
+
+import nl.novi.TechItEasyController.Models.Television;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public class WallBracketDto {
-
 
 
     @NotBlank
@@ -19,6 +21,15 @@ public class WallBracketDto {
     private double price;
 
 
+
+    //Relation
+    private List<Television> televisions;
+    public List<Television> getTelevisions() {
+        return televisions;
+    }
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
+    }
 
 
 

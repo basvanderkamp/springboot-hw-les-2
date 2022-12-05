@@ -1,6 +1,7 @@
 package nl.novi.TechItEasyController.Controllers;
 
-import nl.novi.TechItEasyController.Dto.TelevisionDto;
+import nl.novi.TechItEasyController.Dto.Output.TelevisionDto;
+import nl.novi.TechItEasyController.Dto.Input.TelevisionInputDto;
 import nl.novi.TechItEasyController.Service.TelevisionService;
 import nl.novi.TechItEasyController.Util.Utils;
 import org.springframework.http.HttpStatus;
@@ -55,8 +56,8 @@ public class TelevisionsController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<TelevisionDto> overWriteTelevision(@PathVariable long id,@RequestBody TelevisionDto televisionDto) {
-        return ResponseEntity.ok(service.overrideTelevision(id, televisionDto));
+    public ResponseEntity<TelevisionDto> overWriteTelevision(@PathVariable long id, @RequestBody TelevisionInputDto televisionInputDto) {
+        return ResponseEntity.ok(service.overrideTelevision(id, televisionInputDto));
     }
 
 
@@ -65,4 +66,14 @@ public class TelevisionsController {
     public ResponseEntity<String> deleteTelevisionById(@PathVariable Long id) {
         return ResponseEntity.ok(service.deleteTelevision(id));
     }
+
+
+    @PutMapping("/{id}/remotecontrollers/{remoteControllerId}")
+    public void assignRemoteControllerToTelevision(@PathVariable Long id, @PathVariable Long remoteControllerId) {
+        TelevisionService.assignRemoteControllerToTelevision(id, remoteControllerId);
+    }
+
+
+
+
 }

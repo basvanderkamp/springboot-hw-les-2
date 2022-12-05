@@ -1,4 +1,6 @@
-package nl.novi.TechItEasyController.Dto;
+package nl.novi.TechItEasyController.Dto.Output;
+
+import nl.novi.TechItEasyController.Models.Television;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -17,7 +19,14 @@ public class RemoteControllerDto {
     private int originalStock;
 
 
-
+    //Relation
+    private Television television;
+    public Television getTelevision() {
+        return television;
+    }
+    public void setTelevision(Television television) {
+        this.television = television;
+    }
 
 
 

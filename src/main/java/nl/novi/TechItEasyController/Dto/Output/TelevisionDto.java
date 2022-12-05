@@ -1,46 +1,81 @@
-package nl.novi.TechItEasyController.Dto;
+package nl.novi.TechItEasyController.Dto.Output;
+
+import nl.novi.TechItEasyController.Models.CiModule;
+import nl.novi.TechItEasyController.Models.RemoteController;
+import nl.novi.TechItEasyController.Models.WallBracket;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
-public class TelevisionInputDto {
+public class TelevisionDto {
 
 
 
     @NotBlank
-    public String type;
-    @NotBlank
-    public String brand;
-    @NotBlank
-    public String name;
-    @Positive
-    public double price;
+    private String type;
 
-    public double availableSize;
+    private String brand;
 
-    public double refreshRate;
+    private String name;
 
-    public  String screenType;
+    private double price;
 
-    public String screenQuality;
+    private double availableSize;
 
-    public boolean smartTv;
+    private double refreshRate;
 
-    public boolean wifi;
+    private  String screenType;
 
-    public boolean voiceControl;
+    private String screenQuality;
 
-    public boolean hdr;
+    private boolean smartTv;
 
-    public boolean bluetooth;
+    private boolean wifi;
 
-    public boolean ambiLight;
+    private boolean voiceControl;
 
-    public int originalStock;
+    private boolean hdr;
 
-    public int sold;
+    private boolean bluetooth;
+
+    private boolean ambiLight;
+
+    private int originalStock;
+
+    private int sold;
 
 
+
+    //Relations
+    private RemoteController remoteController;
+    private List<CiModule> ciModules;
+    private List<WallBracket> wallBrackets;
+
+
+    //Relations Getters Setters
+
+
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+    }
+
+    public List<CiModule> getCiModules() {
+        return ciModules;
+    }
+    public void setCiModules(List<CiModule> ciModules) {
+        this.ciModules = ciModules;
+    }
+
+    public List<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+    public void setWallBrackets(List<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
+    }
 
     //Getter
     public String getType() {

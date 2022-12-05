@@ -1,6 +1,7 @@
 package nl.novi.TechItEasyController.Controllers;
 
-import nl.novi.TechItEasyController.Dto.RemoteControllerDto;
+import nl.novi.TechItEasyController.Dto.Output.RemoteControllerDto;
+import nl.novi.TechItEasyController.Dto.Input.RemoteControllerInputDto;
 import nl.novi.TechItEasyController.Service.RemoteControllerService;
 import nl.novi.TechItEasyController.Util.Utils;
 import org.springframework.http.HttpStatus;
@@ -53,8 +54,8 @@ public class RemoteControllerController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<RemoteControllerDto> overWriteRemoteController(@PathVariable long id,@RequestBody RemoteControllerDto remoteControllerDto) {
-        return ResponseEntity.ok(service.overrideRemoteController(id, remoteControllerDto));
+    public ResponseEntity<RemoteControllerDto> overWriteRemoteController(@PathVariable long id, @RequestBody RemoteControllerInputDto remoteControllerInputDto) {
+        return ResponseEntity.ok(service.overrideRemoteController(id, remoteControllerInputDto));
     }
 
 

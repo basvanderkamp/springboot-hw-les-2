@@ -1,12 +1,12 @@
 package nl.novi.TechItEasyController.Models;
 
 
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "RemoteControllers")
+@Table(name = "remote_controllers")
 public class RemoteController {
 
     @Id
@@ -20,11 +20,20 @@ public class RemoteController {
 
 
 
+    //Relations
+    @OneToOne(mappedBy = "remoteController")
+    @JsonIgnore
+    private Television television;
 
+    public Television getTelevision() {
+        return television;
+    }
 
+    public void setTelevision(Television television) {
+        this.television = television;
+    }
 
     //Getters
-
     public Long getId() {
         return id;
     }

@@ -4,7 +4,7 @@ package nl.novi.TechItEasyController.Models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CiModules")
+@Table(name = "ci_modules")
 public class CiModule {
 
     @Id
@@ -17,10 +17,20 @@ public class CiModule {
 
 
 
+    //Relations
+    @ManyToOne
+    @JoinColumn(name = "television_id")
+    private Television television;
+    public Television getTelevision() {
+        return television;
+    }
+    public void setTelevision(Television television) {
+        this.television = television;
+    }
+
 
 
     //Getters
-
     public Long getId() {
         return id;
     }

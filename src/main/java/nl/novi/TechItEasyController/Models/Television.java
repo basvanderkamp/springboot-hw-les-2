@@ -1,6 +1,10 @@
 package nl.novi.TechItEasyController.Models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "televisions")
@@ -28,7 +32,47 @@ public class Television {
 
 
 
-    //getters
+    //Relations
+    @OneToOne
+    private RemoteController remoteController;
+
+    @OneToMany(mappedBy = "television")
+    @JsonIgnore
+    private List<CiModule> ciModules;
+
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "television_id"),
+        inverseJoinColumns = @JoinColumn(name = "wall_bracket_id"),
+        name = "television_wall_bracket")
+    private List<WallBracket> wallBrackets;
+
+
+
+    //Relation Getters en Setters
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+    }
+
+    public List<CiModule> getCiModules() {
+        return ciModules;
+    }
+    public void setCiModules(List<CiModule> ciModules) {
+        this.ciModules = ciModules;
+    }
+
+    public List<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+    public void setWallBrackets(List<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
+    }
+
+
+
+    //Getters
     public long getId() {
         return id;
     }

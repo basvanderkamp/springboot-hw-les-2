@@ -1,9 +1,8 @@
 package nl.novi.TechItEasyController.Service;
 
-import nl.novi.TechItEasyController.Dto.TelevisionDto;
-import nl.novi.TechItEasyController.Dto.WallBracketDto;
+import nl.novi.TechItEasyController.Dto.Output.WallBracketDto;
+import nl.novi.TechItEasyController.Dto.Input.WallBracketInputDto;
 import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
-import nl.novi.TechItEasyController.Models.Television;
 import nl.novi.TechItEasyController.Models.WallBracket;
 import nl.novi.TechItEasyController.Repositorys.WallBracketRepository;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,10 @@ import java.util.Optional;
 @Service
 public class WallBracketService {
 
-    private final WallBracketRepository repos;
+    private final WallBracketRepository wallBracketRepository;
 
-    public WallBracketService(WallBracketRepository repos) {
-        this.repos = repos;
+    public WallBracketService(WallBracketRepository wallBracketRepository) {
+        this.wallBracketRepository = wallBracketRepository;
     }
 
 
@@ -29,6 +28,7 @@ public class WallBracketService {
         dto.setName(wallBracket.getName());
         dto.setPrice(wallBracket.getPrice());
         dto.setAdjustable(wallBracket.isAdjustable());
+        dto.setTelevisions(wallBracket.getTelevisions());
         return dto;
     }
 
@@ -43,14 +43,14 @@ public class WallBracketService {
         newWallBracket.setAdjustable(wallBracketDto.isAdjustable());
 
 
-        WallBracket savedWallBracket = repos.save(newWallBracket);
+        WallBracket savedWallBracket = wallBracketRepository.save(newWallBracket);
         return savedWallBracket.getId();
     }
 
     public Iterable<WallBracketDto> getWallBrackets() {
         ArrayList<WallBracketDto> wallBracketDtoList = new ArrayList<>();
 
-        Iterable<WallBracket> allWallBrackets = repos.findAll();
+        Iterable<WallBracket> allWallBrackets = wallBracketRepository.findAll();
         for (WallBracket wallBracket : allWallBrackets) {
             wallBracketDtoList.add(transferToWallBracketDto(wallBracket));
         }
@@ -58,7 +58,7 @@ public class WallBracketService {
     }
 
     public WallBracketDto getOneWallBracket(Long id) {
-        Optional<WallBracket> wallBracket = repos.findById(id);
+        Optional<WallBracket> wallBracket = wallBracketRepository.findById(id);
 
         if (wallBracket.isEmpty()) {
             throw new RecordNotFoundException("No wall bracket found with id: " + id);
@@ -69,18 +69,18 @@ public class WallBracketService {
     }
 
     public String deleteWallBracket(Long id) {
-        Optional<WallBracket> deleteWallBracket = repos.findById(id);
+        Optional<WallBracket> deleteWallBracket = wallBracketRepository.findById(id);
 
         if (deleteWallBracket.isEmpty()) {
             throw new RecordNotFoundException("No wall bracket found with id: " + id);
         } else {
-            repos.deleteById(id);
+            wallBracketRepository.deleteById(id);
             return "wall bracket with id: " + id + " is deleted!";
         }
     }
 
-    public WallBracketDto overrideWallBracket(Long id, WallBracketDto wallBracketDto) {
-        Optional<WallBracket> toOverrideWallBracket = repos.findById(id);
+    public WallBracketDto overrideWallBracket(Long id, WallBracketInputDto wallBracketInputDto) {
+        Optional<WallBracket> toOverrideWallBracket = wallBracketRepository.findById(id);
 
         if (toOverrideWallBracket.isEmpty()) {
             throw new RecordNotFoundException("No wall bracket found with id: " + id);
@@ -88,14 +88,14 @@ public class WallBracketService {
 
             WallBracket updateWallBracket = toOverrideWallBracket.get();
 
-            updateWallBracket.setType(wallBracketDto.getType());
-            updateWallBracket.setSize(wallBracketDto.getSize());
-            updateWallBracket.setName(wallBracketDto.getName());
-            updateWallBracket.setPrice(wallBracketDto.getPrice());
-            updateWallBracket.setAdjustable(wallBracketDto.isAdjustable());
+            updateWallBracket.setType(wallBracketInputDto.getType());
+            updateWallBracket.setSize(wallBracketInputDto.getSize());
+            updateWallBracket.setName(wallBracketInputDto.getName());
+            updateWallBracket.setPrice(wallBracketInputDto.getPrice());
+            updateWallBracket.setAdjustable(wallBracketInputDto.isAdjustable());
 
 
-            repos.save(updateWallBracket);
+            wallBracketRepository.save(updateWallBracket);
             return transferToWallBracketDto(updateWallBracket);
         }
     }

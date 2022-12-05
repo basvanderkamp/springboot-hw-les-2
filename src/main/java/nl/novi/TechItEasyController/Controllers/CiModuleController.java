@@ -1,7 +1,9 @@
 package nl.novi.TechItEasyController.Controllers;
 
-import nl.novi.TechItEasyController.Dto.CiModuleDto;
+import nl.novi.TechItEasyController.Dto.Output.CiModuleDto;
+import nl.novi.TechItEasyController.Dto.Input.CiModuleInputDto;
 import nl.novi.TechItEasyController.Service.CiModuleService;
+import nl.novi.TechItEasyController.Service.TelevisionService;
 import nl.novi.TechItEasyController.Util.Utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,16 +52,19 @@ public class CiModuleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CiModuleDto> overWriteCiModule(@PathVariable long id,@RequestBody CiModuleDto ciModuleDto) {
-        return ResponseEntity.ok(service.overrideCiModule(id, ciModuleDto));
+    public ResponseEntity<CiModuleDto> overWriteCiModule(@PathVariable long id, @RequestBody CiModuleInputDto ciModuleInputDto) {
+        return ResponseEntity.ok(service.overrideCiModule(id, ciModuleInputDto));
     }
-
-
-
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCiModuleById(@PathVariable Long id) {
         return ResponseEntity.ok(service.deleteCiModule(id));
+    }
+
+
+    @PutMapping("/{id}/television/{televisionId}")
+    public void assignTelevisionToCiModule(@PathVariable Long id, @PathVariable Long televisionId) {
+        CiModuleService.assignTelevisionToCiModule(id, televisionId);
     }
 }
