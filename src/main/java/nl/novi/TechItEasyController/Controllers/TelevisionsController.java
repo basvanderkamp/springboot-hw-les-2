@@ -1,74 +1,79 @@
 package nl.novi.TechItEasyController.Controllers;
 
-import nl.novi.TechItEasyController.Exceptions.IndexOutOfBounceException;
-import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
-import nl.novi.TechItEasyController.Module.Television;
+import nl.novi.TechItEasyController.Dto.Output.TelevisionDto;
+import nl.novi.TechItEasyController.Dto.Input.TelevisionInputDto;
+import nl.novi.TechItEasyController.Service.TelevisionService;
+import nl.novi.TechItEasyController.Util.Utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import javax.validation.Valid;
+import java.net.URI;
 
 
 @RestController
+@RequestMapping("televisions")
 public class TelevisionsController {
-    //variable
 
-    private ArrayList<Television> televisions;
+    private final TelevisionService service;
 
-    public TelevisionsController() {
-        televisions = new ArrayList<>();
-
-        Television television = new Television();
-        television.setName("SamsungTV1");
-        television.setBrand("Samsung");
-        television.setPrice(500);
-        televisions.add(television);
+    public TelevisionsController(TelevisionService service) {
+        this.service = service;
     }
 
-    @GetMapping("/televisions")
-    public ResponseEntity<Object> getTelevisions() {
-        return new ResponseEntity<>(televisions, HttpStatus.OK);
+
+
+
+    @GetMapping("")
+    public ResponseEntity<Iterable<TelevisionDto>> getTelevisions() {
+        return ResponseEntity.ok(service.getTelevisions());
     }
 
-    @GetMapping("/televisions/{id}")
-    public ResponseEntity<Object> getTelevisions(@PathVariable int id) {
-        if (id < televisions.size()) {
-            return new ResponseEntity<>(televisions.get(id), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<TelevisionDto> getTelevisionsById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getOneTelevision(id));
+    }
+
+
+
+    @PostMapping("")
+    public ResponseEntity<String> createTelevision(@Valid @RequestBody TelevisionDto televisionDto, BindingResult br) {
+
+        if (br.hasErrors()) {
+            String errorString = Utils.reportErrors(br);
+            return new ResponseEntity<>(errorString, HttpStatus.BAD_REQUEST);
         } else {
-            throw new IndexOutOfBounceException("id not found");
+            Long createdId = service.createTelevision(televisionDto);
+
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/televisions/" + createdId).toUriString());
+
+            return ResponseEntity.created(uri).body("Television created!");
         }
     }
 
 
-    @PostMapping("/televisions")
-    public ResponseEntity<Object> createTelevision (@RequestBody Television television) {
-        televisions.add(television);
-        return new ResponseEntity<>(television, HttpStatus.CREATED);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TelevisionDto> overWriteTelevision(@PathVariable long id, @RequestBody TelevisionInputDto televisionInputDto) {
+        return ResponseEntity.ok(service.overrideTelevision(id, televisionInputDto));
     }
 
 
-    @PutMapping("/televisions/{id}")
-    public ResponseEntity<Television> updatePerson (@PathVariable int id, @RequestBody Television television) {
-        if (id >= 0 && id < televisions.size()) {
-            televisions.set(id, television);
-            return new ResponseEntity<>(television, HttpStatus.OK);
-        } else {
-            throw new RecordNotFoundException("invalid id");
-        }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTelevisionById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deleteTelevision(id));
     }
 
-    @DeleteMapping("/televisions")
-    public ResponseEntity<String> deleteTelevision (@RequestBody String name) {
-        for (int i = 0; i < televisions.size(); i++) {
-            if (televisions.get(i).getName().equals(name)) {
-                televisions.remove(i);
-                return new ResponseEntity<>("Item Removed", HttpStatus.ACCEPTED);
-            }
-        }
-        throw new RecordNotFoundException("no television found");
+
+    @PutMapping("/{id}/remotecontrollers/{remoteControllerId}")
+    public void assignRemoteControllerToTelevision(@PathVariable Long id, @PathVariable Long remoteControllerId) {
+        TelevisionService.assignRemoteControllerToTelevision(id, remoteControllerId);
     }
+
+
+
+
 }

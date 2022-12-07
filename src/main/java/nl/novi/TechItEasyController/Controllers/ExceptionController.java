@@ -1,6 +1,5 @@
 package nl.novi.TechItEasyController.Controllers;
 
-
 import nl.novi.TechItEasyController.Exceptions.IndexOutOfBounceException;
 import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
