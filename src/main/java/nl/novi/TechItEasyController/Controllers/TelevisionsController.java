@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
+
 @RestController
 public class TelevisionsController {
     //variable
@@ -38,7 +39,7 @@ public class TelevisionsController {
         if (id < televisions.size()) {
             return new ResponseEntity<>(televisions.get(id), HttpStatus.OK);
         } else {
-          throw new IndexOutOfBounceException("id not found");
+            throw new IndexOutOfBounceException("id not found");
         }
     }
 
