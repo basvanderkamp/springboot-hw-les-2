@@ -7,6 +7,7 @@ import nl.novi.TechItEasyController.Exceptions.RecordNotFoundException;
 import nl.novi.TechItEasyController.Models.CiModule;
 import nl.novi.TechItEasyController.Models.RemoteController;
 import nl.novi.TechItEasyController.Models.Television;
+import nl.novi.TechItEasyController.Models.WallBracket;
 import nl.novi.TechItEasyController.Repositorys.CiModuleRepository;
 import nl.novi.TechItEasyController.Repositorys.RemoteControllerRepository;
 import nl.novi.TechItEasyController.Repositorys.TelevisionRepository;
@@ -20,10 +21,10 @@ import java.util.Optional;
 @Service
 public class TelevisionService {
 
-    private static TelevisionRepository televisionRepository = null;
-    private static RemoteControllerRepository remoteControllerRepository = null;
-    private static CiModuleRepository ciModuleRepository = null;
-    private final WallBracketRepository wallBracketRepository;
+    private static TelevisionRepository televisionRepository;
+    private static RemoteControllerRepository remoteControllerRepository;
+    private static CiModuleRepository ciModuleRepository;
+    private static  WallBracketRepository wallBracketRepository;
     public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
@@ -154,6 +155,19 @@ public class TelevisionService {
             televisionRepository.save(television);
         } else {
             throw new RecordNotFoundException();
+        }
+    }
+
+    public static void assignWallBracketToTelevision(Long id, Long wallBracketId) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        Optional<WallBracket> optionalWallBracket = wallBracketRepository.findById(wallBracketId);
+        if (optionalTelevision.isPresent() && optionalWallBracket.isPresent()) {
+            Television television = optionalTelevision.get();
+            WallBracket wallBracket = optionalWallBracket.get();
+            television.addWallBracket(wallBracket);
+            televisionRepository.save(television);
+        } else {
+            throw new RecordNotFoundException("wall bracket or television not fount");
         }
     }
 

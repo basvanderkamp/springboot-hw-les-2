@@ -73,6 +73,11 @@ public class TelevisionsController {
         TelevisionService.assignRemoteControllerToTelevision(id, remoteControllerId);
     }
 
+    @PutMapping("/{id}/wallbrackets/{wallBracketId}")
+    public void assignWallBracketToTelevision(@PathVariable Long id, @PathVariable Long wallBracketId) {
+        TelevisionService.assignWallBracketToTelevision(id, wallBracketId);
+    }
+
 
 
 

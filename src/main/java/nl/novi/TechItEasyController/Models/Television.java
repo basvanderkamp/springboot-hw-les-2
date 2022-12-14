@@ -71,6 +71,11 @@ public class Television {
     }
 
 
+    public void addWallBracket(WallBracket wallBracket) {
+        this.wallBrackets.add(wallBracket);
+    }
+
+
 
     //Getters
     public long getId() {
